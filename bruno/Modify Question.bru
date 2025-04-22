@@ -1,0 +1,20 @@
+meta {
+  name: Modify Question
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{url}}/questions/{{questionID}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "text": "What is 1 + 2?",
+    "choices": ["1", "2", "3", "4"],
+    "answer": "3",
+    "tags": ["math", "school"]
+  }
+}

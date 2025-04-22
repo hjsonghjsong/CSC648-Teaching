@@ -1,0 +1,16 @@
+meta {
+  name: Get Questions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/questions?tag=math&n=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  tag: math
+  n: 1
+}

@@ -17,6 +17,8 @@
           packages = with pkgs; [
             go
             golangci-lint
+
+            code2prompt
           ];
         };
       };

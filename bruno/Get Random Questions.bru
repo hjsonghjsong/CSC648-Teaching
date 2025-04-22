@@ -1,0 +1,15 @@
+meta {
+  name: Get Random Questions
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{url}}/questions/random?n=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  n: 1
+}

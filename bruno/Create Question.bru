@@ -1,0 +1,20 @@
+meta {
+  name: Create Question
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{url}}/questions
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "text": "What is 1 + 2?",
+    "choices": ["1", "2", "3", "4"],
+    "answer": "3",
+    "tags": ["math", "school"]
+  }
+}
