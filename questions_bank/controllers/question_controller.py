@@ -11,17 +11,17 @@ def get_questions(tag: Optional[str] = None, n: Optional[int] = None):
     return service.get_questions(tag=tag, n=n)
 
 
+@router.get("/random")
+def get_random_questions(n: int = Query(1, ge=1)):
+    return service.get_random_questions(n=n)
+
+
 @router.get("/{question_id}")
 def get_question(question_id: int):
     q = service.get_question(question_id)
     if not q:
         raise HTTPException(status_code=404, detail="Question not found")
     return q
-
-
-@router.get("/random")
-def get_random_questions(n: int = Query(1, ge=1)):
-    return service.get_random_questions(n=n)
 
 
 @router.post("/")
