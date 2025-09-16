@@ -1,0 +1,180 @@
+openapi: 3.0.0
+info:
+  title: Question Bank API
+  version: 0.1.0
+  description: |
+    A simple in-memory question bank service.
+    Provides CRUD operations and random question retrieval.
+
+paths:
+  /questions:
+    get:
+      summary: Get questions
+      description: Retrieve a list of questions, optionally filtered by tag and limited by count.
+      parameters:
+        - name: tag
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: n
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: A list of questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+    post:
+      summary: Create a new question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionCreate'
+      responses:
+        '201':
+          description: Question created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+
+  /questions/{questionID}:
+    get:
+      summary: Get a question by ID
+      parameters:
+        - name: questionID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A single question
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        '404':
+          description: Question not found
+    put:
+      summary: Update a question
+      parameters:
+        - name: questionID
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionUpdate'
+      responses:
+        '200':
+          description: Question updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+        '404':
+          description: Question not found
+    delete:
+      summary: Delete a question
+      parameters:
+        - name: questionID
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Question deleted successfully
+        '404':
+          description: Question not found
+
+  /questions/random:
+    get:
+      summary: Get random questions
+      parameters:
+        - name: n
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: A random subset of questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+
+components:
+  schemas:
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+        text:
+          type: string
+        choices:
+          type: array
+          items:
+            type: string
+        answer:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required: [id, text, choices, answer, tags]
+
+    QuestionCreate:
+      type: object
+      properties:
+        text:
+          type: string
+        choices:
+          type: array
+          items:
+            type: string
+        answer:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required: [text, choices, answer, tags]
+
+    QuestionUpdate:
+      type: object
+      properties:
+        text:
+          type: string
+        choices:
+          type: array
+          items:
+            type: string
+        answer:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required: [text, choices, answer, tags]
+
